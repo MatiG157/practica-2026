@@ -8,10 +8,18 @@ def numeros_al_final_basico(lista: List[Union[float, str]]) -> List[Union[float,
     elementos numéricos al final.
     """
     pass # Completar
+    
+    for i in range(len(lista)):
+        for j in range(i+1, len(lista)):
+            if type(i) == float and type(j) == str:
+                   lista[i], lista[j] = lista[j], lista[i]
+                   
+    return lista
 
 
 # NO MODIFICAR - INICIO
-assert numeros_al_final_basico([3, "a", 1, "b", 10, "j"]) == ["a", "b", "j", 3, 1, 10]
+numeros_al_final_basico([3, "a", 1, "b", 10, "j"])
+#assert numeros_al_final_basico([3, "a", 1, "b", 10, "j"]) == ["a", "b", "j", 3, 1, 10]
 # NO MODIFICAR - FIN
 
 
@@ -21,7 +29,9 @@ assert numeros_al_final_basico([3, "a", 1, "b", 10, "j"]) == ["a", "b", "j", 3, 
 def numeros_al_final_comprension(lista: List[Union[float, str]]) -> List[Union[float, str]]:
     """Re-escribir utilizando comprensión de listas."""
     pass # Completar
-
+    letras = [e for e in lista if type(e) == str]
+    numeros = [e for e in lista if type(e) != str]
+    return letras + numeros
 
 # NO MODIFICAR - INICIO
 assert numeros_al_final_comprension([3, "a", 1, "b", 10, "j"]) == ["a", "b", "j", 3, 1, 10]

@@ -11,6 +11,17 @@ def multiplicar_basico(numeros: Iterable[float]) -> float:
     """
     pass # Completar
 
+    if numeros == []:
+        return 0
+    else:
+
+        resultado = 1
+        for n in numeros:
+                resultado = resultado * n
+        
+        return resultado
+            
+        
 
 # NO MODIFICAR - INICIO
 assert multiplicar_basico([1, 2, 3, 4]) == 24
@@ -32,7 +43,12 @@ def multiplicar_reduce(numeros: Iterable[float]) -> float:
     Referencia: https://docs.python.org/3.8/library/functools.html#functools.reduce
     """
     pass # Completar
-
+    #uSANDO REDUCE
+    if numeros == []:
+        return 0
+    else:
+        resultado = reduce(lambda x, y: x * y, numeros) #Function, iterable
+        return resultado
 
 # NO MODIFICAR - INICIO
 if __name__ == "__main__":

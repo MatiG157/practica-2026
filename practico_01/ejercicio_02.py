@@ -8,6 +8,13 @@ def maximo_encadenado(a: float, b: float, c: float) -> float:
     Referencia: https://docs.python.org/3/reference/expressions.html#comparisons
     """
     pass # Completar
+    if a > b and a > c:
+        return a
+    if b > a and b > c:
+        return b
+    else:
+        return c
+
 
 
 # NO MODIFICAR - INICIO
@@ -25,6 +32,7 @@ def maximo_cuadruple(a: float, b: float, c: float, d: float) -> float:
 
     Referencia: https://docs.python.org/3/library/functions.html#max"""
     pass # Completar
+    return max(a,b,c,d)
 
 
 # NO MODIFICAR - INICIO
@@ -43,7 +51,7 @@ def maximo_arbitrario(*args) -> float:
     Referencia: https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists
     """
     pass # Completar
-
+    return max(*args)
 
 # NO MODIFICAR - INICIO
 assert maximo_arbitrario(1, 10, 5, -5) == 10
@@ -58,8 +66,25 @@ assert maximo_arbitrario(24, 9, 18, 30) == 30
 
 def maximo_recursivo(*args) -> float:
     """Re-Escribir de forma recursiva."""
-    pass # Completar
+    # Caso Base: Si solo queda un elemento, ese es el máximo.
+    if len(args) == 1:
+        return args[0]
+    
+    # Paso Recursivo:
+    # Comparamos el primer elemento con el máximo del resto de la lista.
+    primer_elemento = args[0]
+    max_del_resto = maximo_recursivo(*args[1:]) # Aquí ocurre la "repetición", 
+    #el *args[1:] pasa el resto de los argumentos a la función recursiva.
+    
+    if primer_elemento > max_del_resto:
+        return primer_elemento
+    else:
+        return max_del_resto
 
+"""Osea si tengo (1,10,5) por ejemplo, el primer elemento es 1, 
+y el max del resto es maximo_recursivo(10,5) que a su vez hace lo mismo,
+y devuelve el 5. Luego compara el 5 con el 10 y devuelve el 10.
+Y finalmente compara el 10 con el 1 y devuelve el 10 como resultado final."""
 
 # NO MODIFICAR - INICIO
 assert maximo_recursivo(1, 10, 5, -5) == 10
