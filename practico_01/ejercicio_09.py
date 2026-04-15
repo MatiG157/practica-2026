@@ -6,7 +6,10 @@ def sumatoria_basico(n: int) -> int:
 
     Restricción: Utilizar un bucle for.
     """
-    pass # Completar
+    suma = 0
+    for i in range(1, n + 1):
+        suma += i
+    return suma
 
 
 # NO MODIFICAR - INICIO
@@ -22,7 +25,10 @@ def sumatoria_sum(n: int) -> int:
     """Re-Escribir utilizando la función sum y sin usar bucles.
     Referencia: https://docs.python.org/3/library/functions.html#sum
     """
-    pass # Completar
+    return sum(range(1, n + 1))
+# La función sum() toma un iterable y devuelve la suma de sus elementos.
+# En este caso, el iterable es range(1, n + 1), que genera 
+# una secuencia de números desde 1 hasta n inclusive. 
 
 
 # NO MODIFICAR - INICIO

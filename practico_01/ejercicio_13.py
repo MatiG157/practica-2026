@@ -12,7 +12,7 @@ otra manera.
 from typing import Iterator, Callable
 
 
-def generar_pares_clousure(initial: int = 0) -> Callable[[], int]:
+def generar_pares_clousure(initial: int = 0) -> Callable[[], int]: #Devuelve otra función
     """Toma un número inicial y devuelve una función que cada vez que es
     invocada devuelve el número par siguiente al devuelto la última vez que
     fue invocada.
@@ -21,7 +21,20 @@ def generar_pares_clousure(initial: int = 0) -> Callable[[], int]:
         - Usar closures
         - Usar el modificador nonlocal
     """
-    pass # Completar
+    numero_actual = initial
+
+    def siguiente_par() -> int:#Tiene el numero actual aunque generar_pares_clousure 
+        #aya terminado su ejecución, es decir, 
+        # el valor de numero_actual persiste entre las llamadas a siguiente_par
+        
+        nonlocal numero_actual #Asi indico que si modifico numero_actual, 
+        #quiero modificar la variable del scope de generar_pares_clousure 
+        # y no una nueva variable local a siguiente_par
+        resultado = numero_actual
+        numero_actual += 2
+        return resultado
+
+    return siguiente_par
 
 
 # NO MODIFICAR - INICIO
@@ -45,7 +58,13 @@ def generar_pares_generator(initial: int = 0) -> Iterator[int]:
     """Re-Escribir utilizando Generadores
     Referencia: https://docs.python.org/3/howto/functional.html?highlight=generator#generators
     """
-    pass # Completar
+    numero_actual = initial
+    while True:
+        yield numero_actual #El yield es similar al return, 
+        # pero en lugar de finalizar la función, 
+        # permite que la función se suspenda y pueda reanudarse posteriormente,
+        # manteniendo su estado entre llamadas.
+        numero_actual += 2
 
 
 # NO MODIFICAR - INICIO
@@ -61,7 +80,12 @@ assert next(generador_pares) == 4
 
 def generar_pares_generator_send(initial: int = 0) -> Iterator[int]:
     """CHALLENGE OPCIONAL: Re-Escribir utilizando send para saltear numeros"""
-    pass # Completar
+    numero_actual = initial
+    while True:
+        received = yield numero_actual
+        if received is not None:
+            numero_actual = received
+        numero_actual += 2
 
 
 # NO MODIFICAR - INICIO
@@ -82,7 +106,15 @@ if __name__ == "__main__":
 
 def generar_pares_delegados(initial: int = 0) -> Iterator[int]:
     """CHALLENGE OPCIONAL: Re-Escribir utilizando Generadores delegados (yield from)"""
-    pass # Completar
+    yield from generar_pares_generator(initial)
+    # El yield from delega la generación de valores a otro generador,
+    # en este caso generar_pares_generator.
+    
+    # Esto permite que generar_pares_delegados produzca los mismos valores que 
+    # de generar_pares_generator sin tener que escribir explícitamente el código de generación de pares.
+    # Es una forma de simplificar el código y 
+    # mejorar la legibilidad al delegar la responsabilidad de generar 
+    # los valores a otro generador. 
 
 
 # NO MODIFICAR - INICIO

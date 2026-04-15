@@ -46,6 +46,13 @@ def numeros_al_final_sorted(lista: List[Union[float, str]]) -> List[Union[float,
     Referencia: https://docs.python.org/3/library/functions.html#sorted
     """
     pass # Completar
+    return sorted(lista, key=lambda x: type(x) == float)
+# Esta funcion ordena la lista utilizando una función lambda como clave de ordenamiento. 
+# La función lambda devuelve True para los elementos que son de tipo float 
+# y False para los demás. 
+# Dado que en Python, False se considera menor que True, 
+# los elementos que no son de tipo float (es decir, las cadenas) 
+# se colocarán antes que los elementos de tipo float en la lista ordenada.
 
 
 # NO MODIFICAR - INICIO
@@ -75,6 +82,9 @@ if __name__ == "__main__":
 def numeros_al_final_recursivo(lista: List[Union[float, str]]) -> List[Union[float, str]]:
     """CHALLENGE OPCIONAL - Re-escribir de forma recursiva."""
     pass # Completar
+        
+
+    
 
 
 # NO MODIFICAR - INICIO

@@ -15,8 +15,10 @@ from typing import Callable, Iterable
 def apply(lista: Iterable[int], func: Callable[[int], bool]) -> Iterable[bool]:
     """Toma una lista y una función que toma un parámetro y devuelve una lista
     con la función aplicada a todos los elementos."""
-    pass # Completar
+    return [func(x) for x in lista]
 
+#Ej: Si func fuera es_par(x)
+#apply([3, 4, 5], es_par) → [False, True, False]
 
 # NO MODIFICAR - INICIO
 def esta_entre_valores(x: int, min_: float, max_: float) -> bool:
@@ -26,15 +28,20 @@ def esta_entre_valores(x: int, min_: float, max_: float) -> bool:
 
 ###############################################################################
 
+#El problema es que la funcion esta_entre_valores toma 3 parámetros, 
+# pero apply sólo admite funciones de un parámetro. func(x)
 
-"""Utilizar partial para que pueda pasarse como parámetro a la función apply
-Referencia: https://docs.python.org/3/library/functools.html#functools.partial
-"""
+#Entonces debemos usar partial para crear una nueva función 
+# que fije los valores de min_ y max_ y deje sólo el parámetro x libre.
 
 lista = [3, 4, 5, 6, 7, 8]
 min_ = 4
 max_ = 7
-nueva_funcion = # Completar
+nueva_funcion = partial(esta_entre_valores, min_=min_, max_=max_)
+
+#Es como si hubiéramos definido:
+#def nueva_funcion(x):
+#    return esta_entre_valores(x, min_=4, max_=7)
 
 # NO MODIFICAR - INICIO
 lista = [3, 4, 5, 6, 7, 8]
