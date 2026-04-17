@@ -16,7 +16,19 @@ class Article:
 
     # NO MODIFICAR - FIN
 
-    # Completar
+ # Los métodos mágicos (magic methods) son métodos especiales que comienzan y 
+ # terminan con dos guiones bajos (__). 
+ # Estos métodos permiten a las clases personalizar su comportamiento en ciertas situaciones, 
+ # como la conversión a string, la comparación de objetos, la suma de objetos, entre otros.
+ # Al implementar estos métodos, puedes definir cómo se comporta tu clase en diferentes contextos.
+ 
+    def __repr__(self) -> str:
+        return f"Article({self.name!r})"
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Article):
+            return NotImplemented
+        return self.name == other.name
 
 
 # NO MODIFICAR - INICIO
@@ -50,6 +62,24 @@ class ShoppingCart:
     # NO MODIFICAR - FIN
 
     # Completar
+    def __str__(self) -> str:
+        return str([article.name for article in self.articles])
+
+    def __repr__(self) -> str:
+        return f"ShoppingCart({self.articles!r})"
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ShoppingCart):
+            return NotImplemented
+
+        this_names = sorted(article.name for article in self.articles)
+        other_names = sorted(article.name for article in other.articles)
+        return this_names == other_names
+
+    def __add__(self, other: object) -> ShoppingCart:
+        if not isinstance(other, ShoppingCart):
+            return NotImplemented
+        return ShoppingCart(self.articles + other.articles)
 
 
 # NO MODIFICAR - INICIO
@@ -79,3 +109,22 @@ combinado = ShoppingCart().add(manzana) + ShoppingCart().add(pera)
 assert combinado == ShoppingCart().add(manzana).add(pera)
 
 # NO MODIFICAR - FIN
+
+
+# En Article, método repr:
+# Devuelve un texto reproducible tipo Article('Manzana'), para que eval(repr(objeto)) pueda reconstruirlo.
+
+# En Article, método eq:
+# Compara dos artículos por su nombre, no por si son el mismo objeto en memoria.
+
+# En ShoppingCart, método str:
+# Devuelve los nombres como lista de strings, por eso queda exactamente "['Manzana', 'Pera']".
+
+# En ShoppingCart, método repr:
+# Devuelve algo reproducible tipo ShoppingCart([Article('Manzana'), Article('Pera')]).
+
+# En ShoppingCart, método eq:
+# Compara carritos por contenido ignorando el orden (ordena los nombres antes de comparar).
+
+# En ShoppingCart, método add:
+# Permite sumar carritos con + y devuelve un carrito nuevo con los artículos combinados.

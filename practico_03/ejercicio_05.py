@@ -5,14 +5,37 @@ class Auto:
     """La clase auto tiene dos propiedades, precio y marca. La marca se define
     obligatoriamente al construir la clase y siempre que se devuelve, se 
     devuelve con la primer letra en mayúscula y no se puede modificar. El precio
-    puede modificarse pero cuando se muestra, se redondea a 2 decimales
-    
+    puede modificarse pero cuando se muestra, se redondea a 2 decimales   
     Restricción: Usar Properties
     
     Referencia: https://docs.python.org/3/library/functions.html#property"""
 
-    # Completar
+    
+    
+    def __init__(self, nombre: str, precio: float):
+        self._nombre = nombre
+        self._precio = precio
 
+
+    #Properties es una forma de usar métodos como si fueran atributos, 
+    # lo que permite controlar el acceso a los atributos de una clase y 
+    # realizar validaciones o cálculos adicionales al obtener o establecer su valor.
+    
+    @property
+    def nombre(self) -> str:
+        return self._nombre[:1].upper() + self._nombre[1:]
+
+    @property
+    def precio(self) -> float:
+        return round(self._precio, 2)
+
+    @precio.setter #setter es un decorador que se utiliza para definir un método que se 
+    #ejecutará cuando se intente establecer el valor de una propiedad. 
+    def precio(self, nuevo_precio: float) -> None:
+        self._precio = nuevo_precio
+ 
+
+    
 
 # NO MODIFICAR - INICIO
 auto = Auto("Ford", 12_875.456)
@@ -39,7 +62,20 @@ from dataclasses import dataclass
 class Auto:
     """Re-Escribir utilizando DataClasses"""
 
-    # Completar
+    _nombre: str
+    _precio: float
+
+    @property
+    def nombre(self) -> str:
+        return self._nombre[:1].upper() + self._nombre[1:]
+
+    @property
+    def precio(self) -> float:
+        return round(self._precio, 2)
+
+    @precio.setter
+    def precio(self, nuevo_precio: float) -> None:
+        self._precio = nuevo_precio
 
 
 # NO MODIFICAR - INICIO

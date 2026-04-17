@@ -16,6 +16,16 @@ class Persona:
     """
 
     # Completar
+    def __init__(self, nombre: str, edad: int, sexo: str, peso: float, altura: float): #Constructor 
+        self.nombre = nombre
+        self.edad = edad
+        self.sexo = sexo
+        self.peso = peso
+        self.altura = altura
+
+    def es_mayor_edad(self):
+        return self.edad >= 18
+
 
 
 # NO MODIFICAR - INICIO
@@ -33,7 +43,17 @@ from dataclasses import dataclass
 class Persona:
     """Re-Escribir utilizando DataClasses"""
 
-    # Completar
+   #Las DataClasses generan automáticamente el constructor 
+   # y otros métodos especiales como __repr__, __eq__, etc.
+   # Solo necesitamos definir los atributos de instancia.
+    nombre: str
+    edad: int
+    sexo: str
+    peso: float
+    altura: float
+
+    def es_mayor_edad(self):
+        return self.edad >= 18
 
 
 # NO MODIFICAR - INICIO

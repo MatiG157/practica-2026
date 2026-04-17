@@ -24,7 +24,21 @@ def actualizar_precio(articulos: List[Articulo], porcentaje: float) -> List[Arti
     Hint: Usar deepcopy (https://docs.python.org/3/library/copy.html#copy.deepcopy)
     """
     
-    # Completar
+    #El módulo copy de Python proporciona funciones para realizar copias superficiales (shallow copy)
+    # y copias profundas (deep copy) de objetos.
+    
+    #La función deepcopy se utiliza para crear una copia profunda de un objeto, 
+    # lo que significa que se crea una nueva instancia del objeto y se copian recursivamente todos 
+    # los objetos anidados dentro de él.
+    # Sirve para evitar que los cambios realizados en la copia afecten al objeto original,
+    # especialmente cuando se trabaja con objetos mutables como listas o diccionarios.
+    
+    articulos_actualizados = deepcopy(articulos)
+
+    for articulo in articulos_actualizados:
+        articulo.precio = articulo.precio * (1 + porcentaje / 100)
+
+    return articulos_actualizados
 
 
 # NO MODIFICAR - INICIO

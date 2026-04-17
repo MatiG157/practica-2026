@@ -10,8 +10,14 @@ class Articulo:
           clase (@classmethod) con una variable de clase
     """
 
-    # Completar
+    _last_id = 0 # Variable de clase para llevar el seguimiento del último id asignado
 
+    def __init__(self, nombre: str = None):
+        self.nombre = nombre
+        Articulo._last_id += 1 # Incrementar la variable de clase para el próximo id
+        self.id_ = Articulo._last_id # Asignar el id al artículo actual
+
+    
 
 # NO MODIFICAR - INICIO
 art1 = Articulo("manzana")
