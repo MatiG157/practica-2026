@@ -45,7 +45,7 @@ assert result == 28671512
 ###############################################################################
 
 
-from functools import partial
+from functools import partial, wraps
 
 
 def medir_tiempo(func: Callable[[], int]) -> Tuple[int, float]:
@@ -55,7 +55,10 @@ def medir_tiempo(func: Callable[[], int]) -> Tuple[int, float]:
     Restricción: La función no debe tomar parámetros y por lo tanto se
     recomienda usar partial.
     """
-    pass # Completar
+    start = perf_counter() # Iniciar el contador de tiempo
+    result = func() # Ejecutar la función pasada como argumento
+    elapsed = perf_counter() - start # Calcular el tiempo transcurrido
+    return result, elapsed # Devolver el resultado y el tiempo de ejecución como una tupla
 
 
 # NO MODIFICAR - INICIO
@@ -73,7 +76,17 @@ def medir_tiempo(func: Callable[[Sequence[int], int], int]) -> Callable[[Sequenc
     partial. En este caso se debe devolver una función que devuelva la tupla y
     tome una cantidad arbitraria de parámetros.
     """
-    pass # Completar
+    @wraps(func) #Wraps es un decorador que se utiliza para preservar 
+    #la información de la función original (como su nombre, docstring, etc.) 
+    #cuando se envuelve con otro decorador. Esto es útil para mantener la claridad y 
+    # la trazabilidad del código, especialmente cuando se utilizan múltiples decoradores.
+    def wrapper(*args, **kwargs):
+        start = perf_counter() # Iniciar el contador de tiempo
+        result = func(*args, **kwargs) # Ejecutar la función pasada como argumento
+        elapsed = perf_counter() - start # Calcular el tiempo transcurrido
+        return result, elapsed # Devolver el resultado y el tiempo de ejecución como una tupla
+
+    return wrapper # Devolver la función wrapper que envuelve la función original
 
 
 # NO MODIFICAR - INICIO
@@ -127,9 +140,46 @@ def memoized(func):
     tiempo para la función calcular posibilidades. Prestar atención a los tiempo
     de ejecución
     """
-    pass # Completar
+    cache = {}
+
+    def normalizar(valor):
+        if isinstance(valor, list):
+            return tuple(normalizar(v) for v in valor)
+        if isinstance(valor, tuple):
+            return tuple(normalizar(v) for v in valor)
+        if isinstance(valor, dict):
+            return tuple(sorted((k, normalizar(v)) for k, v in valor.items()))
+        if isinstance(valor, set):
+            return tuple(sorted(normalizar(v) for v in valor))
+        return valor
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        key_args = tuple(normalizar(arg) for arg in args)
+        key_kwargs = tuple(sorted((k, normalizar(v)) for k, v in kwargs.items()))
+        key = (key_args, key_kwargs)
+        if key not in cache:
+            cache[key] = func(*args, **kwargs)
+        return cache[key]
+
+    return wrapper
 
 
+@memoized
+def _calcular_posibilidades_recursiva_impl(lista: Tuple[int, ...], limite: int) -> int:
+    if limite <= 0:
+        return 0
+    return _calcular_posibilidades_recursiva_impl(lista, limite - 1) + sum(
+        1 for _ in permutations(lista, limite - 1)
+    )
+
+# calcular_posibilidades = medir_tiempo(memoized(calcular_posibilidades))
+#Aca al llamar:
+#1ro medir_tiempo se ejecuta y devuelve una función wrapper que espera los argumentos de 
+# calcular_posibilidades.
+#2do memoized se ejecuta y devuelve otra función wrapper que envuelve la función original
+#3ro calcular_posibilidades se redefine como la función wrapper devuelta por memoized, 
+# que a su vez envuelve la función wrapper devuelta por medir_tiempo.
 @medir_tiempo
 @memoized
 def calcular_posibilidades(lista: Sequence[int], limite: int) -> int:
@@ -171,7 +221,7 @@ sucesivas.
 @memoized
 def calcular_posibilidades_recursiva(lista: Sequence[int], limite: int) -> int:
     """Re-Escribir de manera recursiva"""
-    pass # Completar
+    return _calcular_posibilidades_recursiva_impl(tuple(lista), limite)
 
 
 # NO MODIFICAR - INICIO
