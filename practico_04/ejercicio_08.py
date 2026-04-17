@@ -1,10 +1,13 @@
 """Base de datos SQL - Listar"""
 
 import datetime
+import sqlite3
 
 from practico_04.ejercicio_02 import agregar_persona
+from practico_04.ejercicio_01 import DB_PATH
 from practico_04.ejercicio_06 import reset_tabla
 from practico_04.ejercicio_07 import agregar_peso
+from practico_04.ejercicio_04 import buscar_persona
 
 
 def listar_pesos(id_persona):
@@ -30,7 +33,27 @@ def listar_pesos(id_persona):
 
     - False en caso de no cumplir con alguna validacion.
     """
-    return []
+    if buscar_persona(id_persona) is False:
+        return False
+
+    conexion = sqlite3.connect(DB_PATH)
+    cursor = conexion.cursor()
+
+    cursor.execute(
+        """
+        SELECT Fecha, Peso
+        FROM PersonaPeso
+        WHERE IdPersona = ?
+        ORDER BY Fecha ASC
+        """,
+        (id_persona,),
+    )
+    resultados = cursor.fetchall() # fetchall() devuelve una lista de tuplas con los
+    #resultados de la consulta, donde cada tupla representa una fila de la tabla y 
+    #contiene los valores de las columnas seleccionadas en la consulta.
+    conexion.close()
+
+    return resultados
 
 
 # NO MODIFICAR - INICIO
