@@ -2,7 +2,10 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from ejercicio_01 import Base, Socio
+try:
+    from practico_05.ejercicio_01 import Base, Socio
+except ModuleNotFoundError:
+    from ejercicio_01 import Base, Socio
 
 from typing import List, Optional
 

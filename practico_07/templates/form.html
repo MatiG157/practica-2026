@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <section class="form-panel">
+    <h2>{{ titulo }}</h2>
+
+    <form method="post" class="form-grid">
+      <label for="dni">DNI</label>
+      <input id="dni" name="dni" type="text" value="{{ valores.dni }}" required />
+
+      <label for="nombre">Nombre</label>
+      <input id="nombre" name="nombre" type="text" value="{{ valores.nombre }}" required />
+
+      <label for="apellido">Apellido</label>
+      <input id="apellido" name="apellido" type="text" value="{{ valores.apellido }}" required />
+
+      <div class="acciones-form">
+        <button type="submit" class="btn btn-primario">{{ accion }}</button>
+        <a class="btn" href="{{ url_for('index') }}">Cancelar</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

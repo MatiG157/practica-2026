@@ -31,7 +31,7 @@ class NegocioSocio(object):
         Devuelve None si no encuentra nada.
         :rtype: Socio
         """
-        return
+        return self.datos.buscar(id_socio)
 
     def buscar_dni(self, dni_socio):
         """
@@ -39,14 +39,14 @@ class NegocioSocio(object):
         Devuelve None si no encuentra nada.
         :rtype: Socio
         """
-        return
+        return self.datos.buscar_dni(dni_socio)
 
     def todos(self):
         """
         Devuelve listado de todos los socios.
         :rtype: list
         """
-        return []
+        return self.datos.todos()
 
     def alta(self, socio):
         """
@@ -57,7 +57,11 @@ class NegocioSocio(object):
         :type socio: Socio
         :rtype: bool
         """
-        return False
+        self.regla_1(socio)
+        self.regla_2(socio)
+        self.regla_3()
+        self.datos.alta(socio)
+        return True
 
     def baja(self, id_socio):
         """
@@ -65,7 +69,7 @@ class NegocioSocio(object):
         Devuelve True si el borrado fue exitoso.
         :rtype: bool
         """
-        return False
+        return self.datos.baja(id_socio)
 
     def modificacion(self, socio):
         """
@@ -76,7 +80,9 @@ class NegocioSocio(object):
         :type socio: Socio
         :rtype: bool
         """
-        return False
+        self.regla_2(socio)
+        self.datos.modificacion(socio)
+        return True
 
     def regla_1(self, socio):
         """
@@ -85,7 +91,10 @@ class NegocioSocio(object):
         :raise: DniRepetido
         :return: bool
         """
-        return False
+        existente = self.buscar_dni(socio.dni)
+        if existente is not None:
+            raise DniRepetido('El DNI ya esta registrado')
+        return True
 
     def regla_2(self, socio):
         """
@@ -94,7 +103,13 @@ class NegocioSocio(object):
         :raise: LongitudInvalida
         :return: bool
         """
-        return False
+        if len(socio.nombre) < self.MIN_CARACTERES or len(socio.nombre) > self.MAX_CARACTERES:
+            raise LongitudInvalida('Longitud de nombre invalida')
+
+        if len(socio.apellido) < self.MIN_CARACTERES or len(socio.apellido) > self.MAX_CARACTERES:
+            raise LongitudInvalida('Longitud de apellido invalida')
+
+        return True
 
     def regla_3(self):
         """
@@ -102,4 +117,6 @@ class NegocioSocio(object):
         :raise: MaximoAlcanzado
         :return: bool
         """
-        return False
+        if len(self.todos()) >= self.MAX_SOCIOS:
+            raise MaximoAlcanzado('Se alcanzo el maximo de socios')
+        return True

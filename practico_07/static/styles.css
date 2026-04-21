@@ -1,0 +1,152 @@
+:root {
+  --fondo: #f2f4f8;
+  --superficie: #ffffff;
+  --primario: #0b5ed7;
+  --peligro: #c0392b;
+  --texto: #1f2937;
+  --borde: #d0d7e2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(160deg, #eef3ff 0%, #f8fafc 100%);
+  color: var(--texto);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contenedor {
+  max-width: 980px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.encabezado {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.encabezado h1 {
+  margin: 0;
+}
+
+.encabezado p {
+  margin: 0.25rem 0 0;
+  color: #6b7280;
+}
+
+.mensajes {
+  margin-bottom: 1rem;
+}
+
+.alerta {
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid transparent;
+}
+
+.alerta.ok {
+  background: #ebfff0;
+  border-color: #72c08a;
+}
+
+.alerta.error {
+  background: #fff0ef;
+  border-color: #e79b95;
+}
+
+.acciones-principales {
+  margin-bottom: 0.75rem;
+}
+
+.tabla-contenedor,
+.form-panel {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e8edf5;
+}
+
+.acciones-fila {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid #b9c5d8;
+  color: #1f2937;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  background: #f9fbff;
+  cursor: pointer;
+}
+
+.btn-primario {
+  background: var(--primario);
+  border-color: var(--primario);
+  color: #fff;
+}
+
+.btn-peligro {
+  background: var(--peligro);
+  border-color: var(--peligro);
+  color: #fff;
+}
+
+.sin-datos {
+  text-align: center;
+  color: #6b7280;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  max-width: 420px;
+}
+
+input {
+  border: 1px solid #b9c5d8;
+  border-radius: 8px;
+  padding: 0.55rem 0.65rem;
+}
+
+.acciones-form {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .contenedor {
+    margin: 1rem auto;
+  }
+
+  .acciones-fila {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

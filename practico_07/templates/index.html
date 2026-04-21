@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <section class="acciones-principales">
+    <a class="btn btn-primario" href="{{ url_for('alta') }}">Alta</a>
+  </section>
+
+  <section class="tabla-contenedor">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>DNI</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for socio in socios %}
+          <tr>
+            <td>{{ socio.id }}</td>
+            <td>{{ socio.dni }}</td>
+            <td>{{ socio.nombre }}</td>
+            <td>{{ socio.apellido }}</td>
+            <td class="acciones-fila">
+              <a class="btn" href="{{ url_for('modificar', id_socio=socio.id) }}">Modificar</a>
+              <form method="post" action="{{ url_for('baja', id_socio=socio.id) }}">
+                <button class="btn btn-peligro" type="submit">Baja</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5" class="sin-datos">No hay socios cargados.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ titulo_pagina or 'TP7 - Socios' }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <main class="contenedor">
+      <header class="encabezado">
+        <h1>Gestion de Socios</h1>
+        <p>Capa de Presentacion - TP7</p>
+      </header>
+
+      {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% if mensajes %}
+          <section class="mensajes">
+            {% for categoria, mensaje in mensajes %}
+              <div class="alerta {{ categoria }}">{{ mensaje }}</div>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+
+      {% block contenido %}{% endblock %}
+    </main>
+  </body>
+</html>
